@@ -129,11 +129,11 @@ cbinomMME <- function(data){
     (integrate(function(x) 2*x*pbeta(t[1], x, t[2] - x + 1), lower = 0, upper = t[2] + 1)$value - mean(data^2))^2
   }
   sec <- 1
-  ini <- optim(c(0.3, sec), do)$par
-  while(ini[1] > 1){
-  sec <- sec + 1
-  ini <- optim(c(0.3, sec), do)$par
-  }
+  ini <- optim(c(0.3, sec), do, lower = c(1e-05, 1), upper = c(0.9999, Inf), method = "L-BFGS-B")$par
+#  while(ini[1] > 1){
+#  sec <- sec + 1
+#  ini <- optim(c(0.3, sec), do)$par
+#  }
   return(ini)
 }
 
